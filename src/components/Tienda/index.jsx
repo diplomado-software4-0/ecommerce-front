@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import Card from "./Card";
-import ProductModal from "./modal";
+import Card from "../Card";
+import ProductModal from "../Modal/index";
 
-const Tienda = ({ descuentoActivo, onAddToCart }) => {
+const Tienda = ({ onAddToCart }) => {
   const [productos, setProductos] = useState([]);
   const [categoria, setCategoria] = useState("all");
   const [busqueda, setBusqueda] = useState("");
@@ -58,6 +58,7 @@ const Tienda = ({ descuentoActivo, onAddToCart }) => {
         placeholder="Buscar productos..."
         value={busqueda}
         onChange={manejarCambioBusqueda}
+        style={{ width: "600px", margin: "auto" }}
         className="form-control mb-4"
       />
 
@@ -65,6 +66,7 @@ const Tienda = ({ descuentoActivo, onAddToCart }) => {
       <select
         value={categoria}
         onChange={manejarCambioCategoria}
+        style={{ width: "600px", margin: "auto" }}
         className="form-select mb-4"
       >
         <option value="all">Todas las categorías</option>
@@ -74,20 +76,14 @@ const Tienda = ({ descuentoActivo, onAddToCart }) => {
         <option value="electronics">Electrónica</option>
       </select>
 
-      <h3 className="d-flex flex-row">Productos</h3>
       <div className="d-flex flex-row flex-wrap justify-content-center">
         {productosFiltrados.map((producto) => {
-          const precioConDescuento = descuentoActivo
-            ? producto.price * 0.8
-            : producto.price;
-
           return (
             <div key={producto.id}>
               <Card
                 url={producto.image}
                 title={producto.title}
-                price={precioConDescuento}
-                originalPrice={producto.price}
+                price={producto.price}
                 description={producto.description}
                 onAddToCart={() => onAddToCart(producto)}
                 onImageClick={() => abrirModal(producto)}
@@ -113,7 +109,6 @@ const Tienda = ({ descuentoActivo, onAddToCart }) => {
 };
 
 Tienda.propTypes = {
-  descuentoActivo: PropTypes.bool.isRequired,
   onAddToCart: PropTypes.func.isRequired,
 };
 
