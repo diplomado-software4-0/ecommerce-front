@@ -1,13 +1,35 @@
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import "./App.css";
 import Inicio from "./components/Inicio/index";
 import Tienda from "./components/Tienda/index";
 import Carrito from "./components/Carrito/index";
-import { useState } from "react";
+import Login from "./components/comp/Login";
+import "./App.css";
+import { signOut } from "fireba se/auth";
+import { onAuthStateChanged } from "firebase/auth";
 
 const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [carrito, setCarrito] = useState([]);
 
+  const handleLogin = () => {
+    setIsAuthenticated(true);
+  };
+  const handleLogout = async () => {
+    await signOut(auth);
+    setIsAuthenticated(false);
+  };
+  // Observa el estado de autenticación del usuario
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsAuthenticated(true);
+      } else {
+        setIsAuthenticated(false);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
   const agregarAlCarrito = (producto) => {
     setCarrito((prevCarrito) => {
       const existe = prevCarrito.find((item) => item.id === producto.id);
@@ -49,6 +71,14 @@ const App = () => {
         <Link to="/Carrito" className="btn btn-dark">
           Carrito
         </Link>
+        <Link to="/Login" className="btn btn-dark">
+          Login
+        </Link>
+        {isAuthenticated && (
+          <button onClick={handleLogout} className="btn btn-dark">
+            Cerrar Sesión
+          </button>
+        )}
       </nav>
       <Routes>
         <Route path="/" element={<Inicio />} />
@@ -66,6 +96,7 @@ const App = () => {
             />
           }
         />
+        <Route path="/login" element={<Login onLogin={handleLogin} />} />
       </Routes>
     </Router>
   );
