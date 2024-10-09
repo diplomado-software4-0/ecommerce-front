@@ -12,7 +12,7 @@ import Inicio from "./components/Inicio/index";
 import Tienda from "./components/Tienda/index";
 import Carrito from "./components/Carrito/index";
 import Login from "./components/Login/Login";
-import AdminDashboard from "./components/AdminDashboard";
+import AdminDashboard from "./components/Admin/adminDashBoard";
 import "./App.css";
 import Register from "./components/Login/Register";
 
@@ -140,14 +140,12 @@ const App = () => {
         {/* Rutas accesibles solo para usuarios autenticados */}
         {isAuthenticated && (
           <>
-            {/* Si el usuario es admin, mostrar solo el Admin Dashboard */}
+            {/* Si el usuario es admin, mostrar Admin Dashboard */}
             {isAdmin ? (
               <Route path="/admin" element={<AdminDashboard />} />
             ) : (
-              // Redirigir a la página de inicio si un usuario normal intenta acceder al Admin
               <Route path="/admin" element={<Navigate to="/" />} />
             )}
-            {/* Redirigir a la tienda u otra ruta si se intenta acceder a /login o /register */}
             <Route path="/login" element={<Navigate to="/" />} />
             <Route path="/register" element={<Navigate to="/" />} />
           </>

@@ -19,6 +19,7 @@ const Login = ({ onLogin }) => {
       );
       const users = userCredential.user;
 
+      setMessage("Login successful!");
       const userDoc = doc(firestore, "users", users.uid);
       const docSnap = await getDoc(userDoc);
       console.log("UID del usuario:", users.uid);
@@ -32,7 +33,6 @@ const Login = ({ onLogin }) => {
         onLogin(isAdmin);
 
         navigate(isAdmin ? "/admin" : "/Tienda");
-        setMessage("Login successful!");
       } else {
         console.log("No se encontró el documento del usuario en Firestore.");
       }
@@ -49,12 +49,14 @@ const Login = ({ onLogin }) => {
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        required
       />
       <input
         type="password"
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        required
       />
       <button onClick={handleLogin}>Login</button>
     </div>
