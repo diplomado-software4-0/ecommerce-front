@@ -1,0 +1,39 @@
+.card {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-height: 400px;
+    width: 18rem; 
+    margin: 10px;
+  }
+  
+  .card-img-top {
+    max-height: 200px;
+    width: 100%;
+    object-fit: fill;
+  }
+  
+  .card-body {
+    padding: 10px;
+  }
+  
+  .card-text {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .card-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
