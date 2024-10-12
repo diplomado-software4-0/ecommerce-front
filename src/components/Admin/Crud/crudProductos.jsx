@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const CrudProductos = ({ onAddToCart }) => {
   const [productos, setProductos] = useState([]);
@@ -73,34 +74,45 @@ const CrudProductos = ({ onAddToCart }) => {
   };
 
   return (
-    <div>
-      <h2>CRUD Productos</h2>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          editar ? actualizarProducto() : agregarProducto();
-        }}
-      >
+    <div className="container mt-4">
+    <h2>CRUD Productos</h2>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        editar ? actualizarProducto() : agregarProducto();
+      }}
+      className="mb-4"
+    >
+      <div className="row mb-2">
+        <div className="col">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Título"
+            value={nuevoProducto.title}
+            onChange={(e) =>
+              setNuevoProducto({ ...nuevoProducto, title: e.target.value })
+            }
+            required
+          />
+        </div>
+        <div className="col">
+          <input
+            type="number"
+            className="form-control"
+            placeholder="Precio"
+            value={nuevoProducto.price}
+            onChange={(e) =>
+              setNuevoProducto({ ...nuevoProducto, price: e.target.value })
+            }
+            required
+          />
+        </div>
+      </div>
+      <div className="mb-2">
         <input
           type="text"
-          placeholder="Título"
-          value={nuevoProducto.title}
-          onChange={(e) =>
-            setNuevoProducto({ ...nuevoProducto, title: e.target.value })
-          }
-          required
-        />
-        <input
-          type="number"
-          placeholder="Precio"
-          value={nuevoProducto.price}
-          onChange={(e) =>
-            setNuevoProducto({ ...nuevoProducto, price: e.target.value })
-          }
-          required
-        />
-        <input
-          type="text"
+          className="form-control"
           placeholder="Descripción"
           value={nuevoProducto.description}
           onChange={(e) =>
@@ -108,8 +120,11 @@ const CrudProductos = ({ onAddToCart }) => {
           }
           required
         />
+      </div>
+      <div className="mb-2">
         <input
           type="text"
+          className="form-control"
           placeholder="URL de la imagen"
           value={nuevoProducto.image}
           onChange={(e) =>
@@ -117,31 +132,50 @@ const CrudProductos = ({ onAddToCart }) => {
           }
           required
         />
-        <button type="submit">{editar ? "Actualizar" : "Agregar"}</button>
-      </form>
+      </div>
+      <button type="submit" className="btn btn-primary">
+        {editar ? "Actualizar" : "Agregar"}
+      </button>
+    </form>
 
-      <ul>
-        {productos.map((producto) => (
-          <li key={producto.id}>
-            <h3>{producto.title}</h3>
-            <p>Precio: {producto.price}</p>
+    <ul className="list-group">
+      {productos.map((producto) => (
+        <li key={producto.id} className="list-group-item d-flex justify-content-between align-items-center">
+          <div>
+            <h5>{producto.title}</h5>
+            <p>Precio: ${producto.price}</p>
             <p>{producto.description}</p>
             <img
               src={producto.image}
               alt={producto.title}
               style={{ width: "100px" }}
+              className="img-thumbnail"
             />
-            <button onClick={() => handleEdit(producto)}>Editar</button>
-            <button onClick={() => eliminarProducto(producto.id)}>
+          </div>
+          <div>
+            <button
+              className="btn btn-sm btn-outline-warning me-2"
+              onClick={() => handleEdit(producto)}
+            >
+              Editar
+            </button>
+            <button
+              className="btn btn-sm btn-outline-danger me-2"
+              onClick={() => eliminarProducto(producto.id)}
+            >
               Eliminar
             </button>
-            <button onClick={() => onAddToCart(producto)}>
+            <button
+              className="btn btn-sm btn-success"
+              onClick={() => onAddToCart(producto)}
+            >
               Agregar al carrito
             </button>
-          </li>
-        ))}
-      </ul>
-    </div>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
   );
 };
 

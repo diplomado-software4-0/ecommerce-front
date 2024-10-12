@@ -1,37 +1,48 @@
 import React from "react";
 import PropTypes from "prop-types";
+import "bootstrap/dist/css/bootstrap.min.css"; 
 
 const CartItem = ({ producto, onRemoveFromCart, onModifyQuantity }) => {
   return (
-    <div style={{ borderBottom: "1px solid #ccc", padding: "10px 0" }}>
-      <h4>{producto.title}</h4>
-      <p>
-        Cantidad:
-        <button
-          onClick={() => onModifyQuantity(producto.id, producto.cantidad - 1)}
-          disabled={producto.cantidad <= 1}
-        >
-          -
-        </button>
-        {producto.cantidad}
-        <button
-          onClick={() => onModifyQuantity(producto.id, producto.cantidad + 1)}
-        >
-          +
-        </button>
-      </p>
-      <p>
-        Precio: ${producto.price.toFixed(2)} x {producto.cantidad}
-      </p>
-      <p>Total: ${(producto.price * producto.cantidad).toFixed(2)}</p>
-      <button
-        onClick={() => {
-          console.log("ID del producto a eliminar:", producto.id);
-          onRemoveFromCart(producto.id);
-        }}
-      >
-        Eliminar
-      </button>{" "}
+    <div className="card mb-3 shadow-sm">
+      <div className="card-body">
+        <h4 className="card-title">{producto.title}</h4>
+        <div className="d-flex justify-content-between align-items-center">
+          <div>
+            <p className="mb-1">
+              Cantidad:
+              <button
+                className="btn btn-outline-secondary btn-sm ms-2"
+                onClick={() => onModifyQuantity(producto.id, producto.cantidad - 1)}
+                disabled={producto.cantidad <= 1}
+              >
+                -
+              </button>
+              <span className="mx-2">{producto.cantidad}</span>
+              <button
+                className="btn btn-outline-secondary btn-sm"
+                onClick={() => onModifyQuantity(producto.id, producto.cantidad + 1)}
+              >
+                +
+              </button>
+            </p>
+            <p className="mb-1">
+              Precio: <span className="fw-bold">${producto.price.toFixed(2)}</span>
+            </p>
+            <p className="fw-bold">
+              Total: <span className="text-success">${(producto.price * producto.cantidad).toFixed(2)}</span>
+            </p>
+          </div>
+          <button className="btn btn-danger"
+            onClick={() => {
+              console.log("ID del producto a eliminar:", producto.id);
+              onRemoveFromCart(producto.id);
+            }}
+          >
+            Eliminar
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

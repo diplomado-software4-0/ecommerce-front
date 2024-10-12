@@ -15,6 +15,8 @@ import Login from "./components/Login/Login";
 import AdminDashboard from "./components/Admin/adminDashBoard";
 import "./App.css";
 import Register from "./components/Login/Register";
+import { FaShoppingCart, FaUser } from 'react-icons/fa';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
   const [carrito, setCarrito] = useState([]);
@@ -76,54 +78,77 @@ const App = () => {
 
   return (
     <Router>
-      <nav style={{ margin: "5px" }}>
-        {isAuthenticated ? (
-          <>
-            <Link to="/" className="btn btn-dark">
-              Inicio
+      <header>
+        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+          <div className="container-fluid">
+            <Link to="/" className="navbar-brand">
+              
+              Tu Tienda
             </Link>
-            <Link to="/Tienda" className="btn btn-dark">
-              Tienda
-            </Link>
-            <Link to="/Carrito" className="btn btn-dark">
-              Carrito
-            </Link>
-            {isAdmin && (
-              <Link to="/admin" className="btn btn-dark">
-                Admin Dashboard
-              </Link>
-            )}
-            <button onClick={handleLogout} className="btn btn-dark">
-              Cerrar Sesión
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon"></span>
             </button>
-          </>
-        ) : (
-          <>
-            <Link to="/" className="btn btn-dark">
-              Inicio
-            </Link>
-            <Link to="/Tienda" className="btn btn-dark">
-              Tienda
-            </Link>
-            <Link to="/Carrito" className="btn btn-dark">
-              Carrito
-            </Link>
-            <Link to="/login" className="btn btn-dark">
-              Login
-            </Link>
-            <Link to="/register" className="btn btn-dark">
-              Register
-            </Link>
-          </>
-        )}
-      </nav>
+            <div className="collapse navbar-collapse" id="navbarNav">
+              <ul className="navbar-nav me-auto">
+                <li className="nav-item">
+                  <Link to="/" className="nav-link">
+                    Inicio
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/Tienda" className="nav-link">
+                    Tienda
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/Carrito" className="nav-link">
+                  <FaShoppingCart className="me-2" /> {/* Ícono de carrito */}
+                    ({carrito.length})
+                  </Link>
+                </li>
+                {isAuthenticated && isAdmin && (
+                  <li className="nav-item">
+                    <Link to="/admin" className="nav-link">
+                      Admin Dashboard
+                    </Link>
+                  </li>
+                )}
+              </ul>
+
+              <div className="d-flex">
+                {isAuthenticated ? (
+                  <button onClick={handleLogout} className="btn btn-outline-danger">
+                    Cerrar Sesión
+                  </button>
+                ) : (
+                  <>
+                    <Link to="/login" className="btn btn-outline-primary me-2">
+                      <FaUser className="me-1" /> {/* Ícono de usuario */}
+                      Login
+                    </Link>
+                    <Link to="/register" className="btn btn-outline-secondary">
+                      Registrar
+                    </Link>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        </nav>
+      </header>
+
       <Routes>
-        {/* Rutas accesibles para usuarios no autenticados */}
+        {/* Rutas accesibles para todos los usuarios */}
         <Route path="/" element={<Inicio />} />
-        <Route
-          path="/Tienda"
-          element={<Tienda onAddToCart={agregarAlCarrito} />}
-        />
+        <Route path="/Tienda" element={<Tienda onAddToCart={agregarAlCarrito} />} />
         <Route
           path="/Carrito"
           element={
@@ -140,18 +165,13 @@ const App = () => {
         {/* Rutas accesibles solo para usuarios autenticados */}
         {isAuthenticated && (
           <>
-            {/* Si el usuario es admin, mostrar Admin Dashboard */}
-            {isAdmin ? (
-              <Route path="/admin" element={<AdminDashboard />} />
-            ) : (
-              <Route path="/admin" element={<Navigate to="/" />} />
-            )}
+            {isAdmin && <Route path="/admin" element={<AdminDashboard />} />}
             <Route path="/login" element={<Navigate to="/" />} />
             <Route path="/register" element={<Navigate to="/" />} />
           </>
         )}
 
-        {/* Si el usuario no está autenticado, redirigir a inicio en caso de rutas no definidas */}
+        {/* Redirigir rutas no definidas a inicio */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>

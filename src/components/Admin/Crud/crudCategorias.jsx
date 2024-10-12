@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const CrudCategorias = ({ onCategoryChange }) => {
   const [categorias, setCategorias] = useState([]);
@@ -55,31 +56,50 @@ const CrudCategorias = ({ onCategoryChange }) => {
   };
 
   return (
-    <div>
-      <h2>CRUD Categorías</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Nueva Categoría"
-          value={nuevaCategoria}
-          onChange={(e) => setNuevaCategoria(e.target.value)}
-          required
-        />
-        <button type="submit">{editar ? "Actualizar" : "Agregar"}</button>
+    <div className="card">
+    <div className="card-header">
+      <h2 className="mb-0">CRUD Categorías</h2>
+    </div>
+    <div className="card-body">
+      <form onSubmit={handleSubmit} className="mb-3">
+        <div className="input-group">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Nueva Categoría"
+            value={nuevaCategoria}
+            onChange={(e) => setNuevaCategoria(e.target.value)}
+            required
+          />
+          <button type="submit" className="btn btn-primary">
+            {editar ? "Actualizar" : "Agregar"}
+          </button>
+        </div>
       </form>
 
-      <ul>
+      <ul className="list-group">
         {categorias.map((categoria, index) => (
-          <li key={index}>
-            <h3>{categoria}</h3>
-            <button onClick={() => handleEdit(categoria)}>Editar</button>
-            <button onClick={() => eliminarCategoria(categoria)}>
-              Eliminar
-            </button>
+          <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
+            <span>{categoria}</span>
+            <div>
+              <button
+                className="btn btn-sm btn-outline-warning me-2"
+                onClick={() => handleEdit(categoria)}
+              >
+                Editar
+              </button>
+              <button
+                className="btn btn-sm btn-outline-danger"
+                onClick={() => eliminarCategoria(categoria)}
+              >
+                Eliminar
+              </button>
+            </div>
           </li>
         ))}
       </ul>
     </div>
+  </div>
   );
 };
 

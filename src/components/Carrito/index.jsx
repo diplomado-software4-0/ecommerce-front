@@ -16,7 +16,7 @@ const Carrito = ({
           Tu carrito está vacío. ¡Añade algunos productos!
         </p>
       ) : (
-        <div>
+        <div className="productos">
           {productosEnCarrito.map((producto) => (
             <CartItem
               key={producto.id}
@@ -34,6 +34,7 @@ const Carrito = ({
               )
               .toFixed(2)}
           </h3>
+          <button className="btn btn-primary">Proceder al Pago</button>
         </div>
       )}
     </div>
