@@ -1,5 +1,5 @@
-import React from "react";
 import Card from "../Card";
+import PropTypes from "prop-types";
 
 const Destacados = ({ productos }) => {
   // Filtro productos destacados por rating
@@ -33,4 +33,18 @@ const Destacados = ({ productos }) => {
   );
 };
 
+Destacados.propTypes = {
+  productos: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      image: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      description: PropTypes.string.isRequired,
+      rating: PropTypes.shape({
+        rate: PropTypes.number.isRequired,
+      }).isRequired,
+    })
+  ).isRequired,
+};
 export default Destacados;
