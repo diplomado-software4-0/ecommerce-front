@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import "bootstrap/dist/css/bootstrap.min.css"; 
 
@@ -12,7 +11,7 @@ const CartItem = ({ producto, onRemoveFromCart, onModifyQuantity }) => {
             <p className="mb-1">
               Cantidad:
               <button
-                className="btn btn-outline-secondary btn-sm ms-2"
+                className="btn btn-outline-secondary btn-sm ms-1"
                 onClick={() => onModifyQuantity(producto.id, producto.cantidad - 1)}
                 disabled={producto.cantidad <= 1}
               >

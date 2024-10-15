@@ -28,7 +28,10 @@ const CrudCarrito = ({
         ) : (
           <ul className="list-group">
             {carrito.map((producto) => (
-              <li key={producto.id} className="list-group-item d-flex justify-content-between align-items-center">
+              <li
+                key={producto.id}
+                className="list-group-item d-flex justify-content-between align-items-center"
+              >
                 <div>
                   <h5>{producto.title}</h5>
                   <p className="mb-1">Precio: ${producto.price}</p>
@@ -37,13 +40,17 @@ const CrudCarrito = ({
                 <div>
                   <button
                     className="btn btn-sm btn-outline-primary me-2"
-                    onClick={() => modificarCantidad(producto.id, producto.cantidad + 1)}
+                    onClick={() =>
+                      modificarCantidad(producto.id, producto.cantidad + 1)
+                    }
                   >
                     +
                   </button>
                   <button
                     className="btn btn-sm btn-outline-danger me-2"
-                    onClick={() => modificarCantidad(producto.id, producto.cantidad - 1)}
+                    onClick={() =>
+                      modificarCantidad(producto.id, producto.cantidad - 1)
+                    }
                   >
                     -
                   </button>
@@ -53,6 +60,16 @@ const CrudCarrito = ({
                   >
                     Eliminar
                   </button>
+                  <h3 className="total">
+                    Total: $
+                    {productosEnCarrito
+                      .reduce(
+                        (total, producto) =>
+                          total + producto.price * producto.cantidad,
+                        0
+                      )
+                      .toFixed(2)}
+                  </h3>
                 </div>
               </li>
             ))}
