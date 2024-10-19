@@ -6,7 +6,6 @@ import { doc, getDoc } from "firebase/firestore";
 import PropTypes from "prop-types";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-
 const Login = ({ onLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -45,14 +44,20 @@ const Login = ({ onLogin }) => {
     }
   };
   return (
-    <div className="container d-flex justify-content-center align-items-center" style={{ minHeight: "100vh" }}>
+    <div
+      className="container d-flex justify-content-center align-items-center"
+      style={{ minHeight: "100vh" }}
+    >
       <div className="card shadow p-4" style={{ width: "400px" }}>
         <h2 className="text-center mb-4">
           <i className="bi bi-person-circle me-2"></i> {/* Icono de usuario */}
           Login
         </h2>
         {message && (
-          <div className={`alert ${isError ? "alert-danger" : "alert-success"}`} role="alert">
+          <div
+            className={`alert ${isError ? "alert-danger" : "alert-success"}`}
+            role="alert"
+          >
             {message}
           </div>
         )}
